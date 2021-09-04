@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FileUpload = () => {
+const EmployeeFileUpload = () => {
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose File");
   const [uploadedFile, setUploadedFile] = useState({});
@@ -126,4 +126,4 @@ const FileUpload = () => {
   );
 };
 
-export default FileUpload;
+export default EmployeeFileUpload;

@@ -116,7 +116,7 @@ const EmployeeData = () => {
 
   return (
     <div className="container mt-4">
-      <h4 className="display-4 text-center mb-4">Employee Data</h4>
+      <h4 className="display-4 text-center mb-4">Employee Table</h4>
       <form onSubmit={handleSubmit}>
         <div>
           <TextField
