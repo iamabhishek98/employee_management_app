@@ -1,7 +1,7 @@
+const Sequelize = require("sequelize");
+const Employee = require("../models/Employee");
 const { successHandler, errorHandler } = require("../lib/responseHandlers");
 const { checkValidSalary } = require("../lib/helper");
-const Employee = require("../models/Employee");
-const Sequelize = require("sequelize");
 
 module.exports = ({ server }) => {
   server.get("/users", async (req, res) => {

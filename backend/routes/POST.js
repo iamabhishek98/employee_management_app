@@ -1,9 +1,9 @@
 const csv = require("fast-csv");
 const fs = require("fs");
-const { successHandler, errorHandler } = require("../lib/responseHandlers");
-const { checkValidSalary } = require("../lib/helper");
 const Employee = require("../models/Employee");
 const db = require("../config/database");
+const { successHandler, errorHandler } = require("../lib/responseHandlers");
+const { checkValidSalary } = require("../lib/helper");
 
 module.exports = ({ server, upload }) => {
   // Upload CSV file using Express Rest APIs

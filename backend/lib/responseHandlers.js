@@ -14,5 +14,4 @@ const errorHandler = (res, error) => {
   });
 };
 
-exports.successHandler = successHandler;
-exports.errorHandler = errorHandler;
+module.exports = { successHandler, errorHandler };
