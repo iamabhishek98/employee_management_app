@@ -8,6 +8,7 @@ const Employee = db.define(
       type: Sequelize.STRING,
       allowNull: false,
       primaryKey: true,
+      unique: true,
     },
     login: {
       type: Sequelize.STRING,

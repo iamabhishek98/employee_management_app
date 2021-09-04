@@ -11,8 +11,10 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     backgroundColor: "#3880ff",
     margin: theme.spacing(2),
-
     height: "53px",
+    "&:hover": {
+      background: "grey",
+    },
   },
   spacing: {
     margin: theme.spacing(2),
@@ -60,6 +62,7 @@ const EmployeeData = () => {
     let newSortBy = sortBy;
     let newLimit = limit;
     let newOffset = offset;
+    let newPageCount = pageCount;
 
     return () => {
       if (pSortBy === sortBy) {
@@ -69,12 +72,14 @@ const EmployeeData = () => {
         newSortOrder = "asc";
         newLimit = DEFAULT_LIMIT;
         newOffset = 0;
+        newPageCount = 1;
       }
 
       setSortBy(newSortBy);
       setSortOrder(newSortOrder);
       setLimit(newLimit);
       setOffset(newOffset);
+      setPageCount(newPageCount);
     };
   };
 
@@ -110,29 +115,31 @@ const EmployeeData = () => {
   };
 
   return (
-    <div>
-      <h1>Employee Data</h1>
+    <div className="container mt-4">
+      <h4 className="display-4 text-center mb-4">Employee Data</h4>
       <form onSubmit={handleSubmit}>
-        <TextField
-          onChange={(e) => setMinSalary(e.target.value)}
-          className={classes.spacing}
-          required
-          id="filled-required"
-          label="Minimum Salary"
-          defaultValue="0"
-          variant="filled"
-          error={minSalaryError}
-        />
-        <TextField
-          onChange={(e) => setMaxSalary(e.target.value)}
-          className={classes.spacing}
-          required
-          id="filled-required"
-          label="Maximum Salary"
-          defaultValue="100000"
-          variant="filled"
-          error={maxSalaryError}
-        />
+        <div>
+          <TextField
+            onChange={(e) => setMinSalary(e.target.value)}
+            className={classes.spacing}
+            required
+            id="filled-required"
+            label="Minimum Salary"
+            defaultValue="0"
+            variant="filled"
+            error={minSalaryError}
+          />
+          <TextField
+            onChange={(e) => setMaxSalary(e.target.value)}
+            className={classes.spacing}
+            required
+            id="filled-required"
+            label="Maximum Salary"
+            defaultValue="100000"
+            variant="filled"
+            error={maxSalaryError}
+          />
+        </div>
         <Button className={classes.blueButton} type="submit">
           Submit Range
         </Button>

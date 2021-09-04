@@ -26,10 +26,10 @@ const startServer = async () => {
 
     // Filter for CSV file
     const csvFilter = (req, file, cb) => {
-      if (file.mimetype.includes("csv")) {
+      if (file.originalname.slice(file.originalname.length - 4) === ".csv") {
         cb(null, true);
       } else {
-        cb("Please upload only csv file.", false);
+        cb("Please upload only csv file!", false);
       }
     };
 
