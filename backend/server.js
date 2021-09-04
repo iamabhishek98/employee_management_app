@@ -1,23 +1,15 @@
 const express = require("express");
 const server = express();
-const { Client } = require("pg");
 const multer = require("multer");
+const db = require("./config/database");
 
-const PORT = 5001; // ||
+const PORT = 5001; // put env
 
 const startServer = async () => {
   try {
-    // configure and connect to database
-    const dbClient = new Client({
-      host: "host.docker.internal",
-      port: 5432,
-      user: "postgres",
-      password: "postgres",
-      database: "postgres",
-    });
-
-    await dbClient.connect();
-    console.log("Connected to DB");
+    db.authenticate()
+      .then(() => console.log("Database connected..."))
+      .catch((err) => console.log("Error: " + err));
 
     server.listen(PORT);
     console.log("App Server running at - http://localhost:%s", PORT);
@@ -43,7 +35,8 @@ const startServer = async () => {
 
     const upload = multer({ storage: storage, fileFilter: csvFilter });
 
-    require("./routes/POST")({ server, dbClient, upload });
+    require("./routes/GET")({ server });
+    require("./routes/POST")({ server, upload });
   } catch (error) {
     console.log("error", error);
   }
