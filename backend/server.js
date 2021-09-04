@@ -35,6 +35,12 @@ const startServer = async () => {
 
     const upload = multer({ storage: storage, fileFilter: csvFilter });
 
+    server.use(function (req, res, next) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      next();
+    });
+
     require("./routes/GET")({ server });
     require("./routes/POST")({ server, upload });
   } catch (error) {
