@@ -138,7 +138,7 @@ const EmployeeData = () => {
             className={classes.spacing}
             required
             id="filled-required"
-            label="Minimum Salary"
+            label="Minimum Salary ($)"
             defaultValue="0"
             variant="filled"
             error={minSalaryError}
@@ -148,7 +148,7 @@ const EmployeeData = () => {
             className={classes.spacing}
             required
             id="filled-required"
-            label="Maximum Salary"
+            label="Maximum Salary ($)"
             defaultValue="100000"
             variant="filled"
             error={maxSalaryError}

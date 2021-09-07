@@ -9,8 +9,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import PublishIcon from "@material-ui/icons/Publish";
 import TableChartIcon from "@material-ui/icons/TableChart";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import EmployeeData from "./EmployeeData";
+import EmployeeFileUpload from "./EmployeeFileUpload";
 
 const drawerWidth = 240;
 
@@ -37,7 +38,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ClippedDrawer() {
+  const [employeeData, setEmployeeData] = useState(true);
+  const [employeeFileUpload, setEmployeeFileUpload] = useState(false);
+
   const classes = useStyles();
+
+  const showEmployeeData = () => {
+    setEmployeeFileUpload(false);
+    setEmployeeData(true);
+  };
+
+  const showEmployeeFileUpload = () => {
+    setEmployeeData(false);
+    setEmployeeFileUpload(true);
+  };
 
   return (
     <div className={classes.root}>
@@ -56,14 +70,14 @@ export default function ClippedDrawer() {
       >
         <Toolbar />
         <div>
-          <ListItem button component={Link} to="/">
+          <ListItem button onClick={() => showEmployeeData()}>
             <ListItemIcon>
               <TableChartIcon />
             </ListItemIcon>
             <ListItemText primary="Employee Table" />
           </ListItem>
           <Divider />
-          <ListItem button component={Link} to="/upload">
+          <ListItem button onClick={() => showEmployeeFileUpload()}>
             <ListItemIcon>
               <PublishIcon />
             </ListItemIcon>
@@ -74,6 +88,8 @@ export default function ClippedDrawer() {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
+        {employeeData && <EmployeeData />}
+        {employeeFileUpload && <EmployeeFileUpload />}
       </main>
     </div>
   );
