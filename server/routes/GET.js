@@ -1,5 +1,5 @@
 const { successHandler, errorHandler } = require("../lib/responseHandlers");
-const { checkValidSalary } = require("../lib/helper");
+const { checkValidSalary } = require("../lib/validationHandler");
 const { fetchEmployee, fetchMultipleEmployees } = require("../db/queries");
 
 module.exports = ({ server }) => {
@@ -60,7 +60,7 @@ module.exports = ({ server }) => {
 
       const user = await fetchEmployee(id);
 
-      if (user) {
+      if (!user) {
         return errorHandler(res, "User not found!");
       }
 

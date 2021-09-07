@@ -1,7 +1,4 @@
-const Sequelize = require("sequelize");
-const Employee = require("../db/models/Employee");
 const { successHandler, errorHandler } = require("../lib/responseHandlers");
-const { checkValidSalary } = require("../lib/helper");
 const { deleteEmployee } = require("../db/queries");
 
 module.exports = ({ server }) => {
