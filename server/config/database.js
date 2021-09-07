@@ -4,14 +4,9 @@ const Sequelize = require("sequelize");
 // dotenv.config();
 
 // replace these with a url using dot.env later
-module.exports = new Sequelize("postgres", "postgres", "postgres", {
-  host: "postgres",
-  dialect: "postgres",
+module.exports = new Sequelize(
+  "postgresql://postgres:postgres@127.0.0.1:5432/postgres",
+  {}
+);
 
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000,
-  },
-});
+// postgresql://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_DATABASE}
