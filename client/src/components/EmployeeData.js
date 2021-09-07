@@ -98,14 +98,12 @@ const EmployeeData = () => {
   };
 
   useEffect(() => {
-    console.log("limit:", limit, "skip:", offset);
     fetchUsers();
   }, [sortBy, sortOrder, limit, offset]);
 
   const classes = useStyles();
 
   const handleSubmit = (e) => {
-    console.log("hello");
     e.preventDefault();
 
     if (!isNaN(minSalary) && minSalary >= 0) {
@@ -122,10 +120,36 @@ const EmployeeData = () => {
       return;
     }
 
-    console.log("range", minSalary, maxSalary);
     setOffset(0);
     setCurrPage(1);
     fetchUsers();
+  };
+
+  const returnTable = () => {
+    if (!users || !users.length) {
+      return <h3>No Employees Found!</h3>;
+    }
+
+    return (
+      <>
+        <div className={classes.spacing}>
+          <IconButton onClick={previousPage}>
+            <ArrowBackIosIcon color="#000" />
+          </IconButton>
+          {currPage}{" "}
+          <IconButton onClick={nextPage}>
+            <ArrowForwardIosIcon color="#000" />
+          </IconButton>
+        </div>
+        <SimpleTable
+          users={users}
+          sortOrder={sortOrder}
+          sortBy={sortBy}
+          requestSort={requestSort}
+          deleteUser={deleteUser}
+        />
+      </>
+    );
   };
 
   return (
@@ -158,23 +182,7 @@ const EmployeeData = () => {
           Submit Range
         </Button>
       </form>
-
-      <div className={classes.spacing}>
-        <IconButton>
-          <ArrowBackIosIcon color="#000" onClick={previousPage} />
-        </IconButton>
-        {currPage}{" "}
-        <IconButton>
-          <ArrowForwardIosIcon color="#000" onClick={nextPage} />
-        </IconButton>
-      </div>
-      <SimpleTable
-        users={users}
-        sortOrder={sortOrder}
-        sortBy={sortBy}
-        requestSort={requestSort}
-        deleteUser={deleteUser}
-      />
+      {returnTable()}
     </div>
   );
 };

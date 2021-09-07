@@ -40,19 +40,6 @@ const useStyles = makeStyles((theme) => ({
 
 const SimpleTable = (props) => {
   const classes = useStyles();
-  if (!props.users) return <></>;
-
-  const editIcon = (
-    <IconButton>
-      <EditIcon color="primary" />
-    </IconButton>
-  );
-
-  var deleteIcon = (
-    <IconButton>
-      <DeleteIcon color="secondary" />
-    </IconButton>
-  );
 
   return (
     <React.Fragment>
@@ -108,10 +95,12 @@ const SimpleTable = (props) => {
                   <TableCell>{item.name}</TableCell>
                   <TableCell>$ {item.salary}</TableCell>
                   <TableCell>
-                    {editIcon}
-                    <span onClick={() => props.deleteUser(item.id)}>
-                      {deleteIcon}
-                    </span>
+                    <IconButton>
+                      <EditIcon color="primary" />
+                    </IconButton>
+                    <IconButton onClick={() => props.deleteUser(item.id)}>
+                      <DeleteIcon color="secondary" />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               );
