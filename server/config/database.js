@@ -5,7 +5,7 @@ const Sequelize = require("sequelize");
 
 // replace these with a url using dot.env later
 module.exports = new Sequelize("postgres", "postgres", "postgres", {
-  host: "host.docker.internal",
+  host: "postgres",
   dialect: "postgres",
 
   pool: {
