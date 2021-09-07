@@ -1,10 +1,6 @@
 const { successHandler, errorHandler } = require("../lib/responseHandlers");
 const { checkValidSalary } = require("../lib/validationHandlers");
-const {
-  fetchEmployee,
-  fetchMultipleEmployees,
-  updateEmployee,
-} = require("../db/queries");
+const { updateEmployee } = require("../db/queries");
 
 module.exports = ({ server, jsonParser }) => {
   server.patch("/users", jsonParser, async (req, res) => {

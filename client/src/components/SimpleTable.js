@@ -95,7 +95,16 @@ const SimpleTable = (props) => {
                   <TableCell>{item.name}</TableCell>
                   <TableCell>$ {item.salary}</TableCell>
                   <TableCell>
-                    <IconButton>
+                    <IconButton
+                      onClick={() =>
+                        props.showPopup(
+                          item.id,
+                          item.login,
+                          item.name,
+                          item.salary
+                        )
+                      }
+                    >
                       <EditIcon color="primary" />
                     </IconButton>
                     <IconButton onClick={() => props.deleteUser(item.id)}>
