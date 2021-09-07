@@ -13,8 +13,8 @@ module.exports = ({ server }) => {
       }
 
       return successHandler(res, "User deleted!");
-    } catch (error) {
-      return errorHandler(res, error);
+    } catch (err) {
+      return errorHandler(res, err);
     }
   });
 };

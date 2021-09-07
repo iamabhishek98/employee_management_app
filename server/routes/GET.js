@@ -49,8 +49,8 @@ module.exports = ({ server }) => {
       );
 
       return successHandler(res, results);
-    } catch (error) {
-      return errorHandler(res, error);
+    } catch (err) {
+      return errorHandler(res, err);
     }
   });
 
@@ -65,8 +65,8 @@ module.exports = ({ server }) => {
       }
 
       return successHandler(res, user);
-    } catch (error) {
-      return errorHandler(res, error);
+    } catch (err) {
+      return errorHandler(res, err);
     }
   });
 };

@@ -28,8 +28,8 @@ module.exports = ({ server }) => {
         res,
         `Successfully uploaded the CSV data from the file: ${req.file.originalname}`
       );
-    } catch (error) {
-      return errorHandler(res, error);
+    } catch (err) {
+      return errorHandler(res, err);
     }
   });
 };

@@ -5,12 +5,12 @@ const successHandler = (res, msg) => {
   });
 };
 
-const errorHandler = (res, error) => {
-  console.log(`Sent error response: ${error}`);
+const errorHandler = (res, err) => {
+  console.log(`Sent error response: ${err}`);
 
   return res.status(400).json({
     status: "error",
-    message: error,
+    message: err,
   });
 };
 
