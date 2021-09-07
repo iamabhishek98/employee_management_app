@@ -2,6 +2,8 @@ const express = require("express");
 const server = express();
 const db = require("./db/config");
 const cors = require("cors");
+const multer = require("multer");
+const bodyParser = require("body-parser");
 
 const PORT = 5001; // put env
 
@@ -13,9 +15,13 @@ const startServer = async () => {
 
     server.use(cors());
 
+    const jsonParser = bodyParser.json();
+    const upload = multer({ storage: multer.memoryStorage() });
+
     require("./routes/GET")({ server });
+    require("./routes/POST")({ server, jsonParser, upload });
+    require("./routes/PATCH")({ server, jsonParser });
     require("./routes/DELETE")({ server });
-    require("./routes/POST")({ server });
 
     server.listen(PORT);
 

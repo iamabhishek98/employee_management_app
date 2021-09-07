@@ -58,13 +58,13 @@ module.exports = ({ server }) => {
     try {
       const { id } = req.params;
 
-      const user = await fetchEmployee(id);
+      const employee = await fetchEmployee(id);
 
-      if (!user) {
-        throw "User not found!";
+      if (!employee) {
+        throw "Employee not found!";
       }
 
-      return successHandler(res, user);
+      return successHandler(res, employee);
     } catch (err) {
       return errorHandler(res, err);
     }

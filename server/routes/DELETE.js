@@ -6,13 +6,13 @@ module.exports = ({ server }) => {
     try {
       const { id } = req.params;
 
-      const user = await deleteEmployee(id);
+      const deleteEmployeeResponse = await deleteEmployee(id);
 
-      if (!user) {
-        throw "User not found!";
+      if (!deleteEmployeeResponse) {
+        throw "Employee not found!";
       }
 
-      return successHandler(res, "User deleted!");
+      return successHandler(res, "Employee deleted!");
     } catch (err) {
       return errorHandler(res, err);
     }

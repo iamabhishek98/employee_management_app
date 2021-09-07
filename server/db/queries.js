@@ -27,9 +27,23 @@ const fetchMultipleEmployees = async (
   });
 };
 
-const insertEmployee = () => {};
+const insertEmployee = async (id, login, name, salary) => {
+  return await Employee.create({
+    id: id,
+    login: login,
+    name: name,
+    salary: salary,
+  });
+};
 
-const updateEmployee = () => {};
+const updateEmployee = async (id, login, name, salary) => {
+  return await Employee.update(
+    { login: login, name: name, salary: salary },
+    {
+      where: { id: id },
+    }
+  );
+};
 
 const deleteEmployee = async (id) => {
   return await Employee.destroy({ where: { id: id }, raw: true });

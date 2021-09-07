@@ -1,11 +1,9 @@
 const { successHandler, errorHandler } = require("../lib/responseHandlers");
-const { upsertMultipleEmployees } = require("../db/queries");
-const multer = require("multer");
+const { upsertMultipleEmployees, insertEmployee } = require("../db/queries");
 const { parseCsv } = require("../lib/fileHandlers");
+const { checkValidSalary } = require("../lib/validationHandlers");
 
-module.exports = ({ server }) => {
-  const upload = multer({ storage: multer.memoryStorage() });
-
+module.exports = ({ server, jsonParser, upload }) => {
   server.post("/users/upload", upload.single("file"), async (req, res) => {
     try {
       if (
@@ -18,9 +16,9 @@ module.exports = ({ server }) => {
 
       const employees = parseCsv(req.file);
 
-      const insertEmployees = await upsertMultipleEmployees(employees);
+      const upsertEmployeesResponse = await upsertMultipleEmployees(employees);
 
-      if (!insertEmployees) {
+      if (!upsertEmployeesResponse) {
         throw "Unable to insert rows into db!";
       }
 
@@ -28,6 +26,22 @@ module.exports = ({ server }) => {
         res,
         `Successfully uploaded the CSV data from the file: ${req.file.originalname}`
       );
+    } catch (err) {
+      return errorHandler(res, err);
+    }
+  });
+
+  server.post("/users", jsonParser, async (req, res) => {
+    try {
+      const { id, login, name, salary } = req.body;
+
+      if (!(id && login && name && salary) || !checkValidSalary(salary)) {
+        throw "Invalid params!";
+      }
+
+      await insertEmployee(id, login, name, salary);
+
+      return successHandler(res, "Employee created!");
     } catch (err) {
       return errorHandler(res, err);
     }
