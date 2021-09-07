@@ -61,4 +61,20 @@ module.exports = ({ server }) => {
       console.log(`catch error: ${error}`);
     }
   });
+
+  server.get("/users/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const user = await Employee.findOne({ where: { id: id }, raw: true });
+
+      if (!user) {
+        errorHandler(res, "User not found!");
+      } else {
+        successHandler(res, user);
+      }
+    } catch (error) {
+      console.log(`catch error: ${error}`);
+    }
+  });
 };

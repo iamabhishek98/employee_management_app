@@ -2,6 +2,7 @@ const express = require("express");
 const server = express();
 const multer = require("multer");
 const db = require("./config/database");
+const cors = require("cors");
 
 const PORT = 5001; // put env
 
@@ -35,13 +36,23 @@ const startServer = async () => {
 
     const upload = multer({ storage: storage, fileFilter: csvFilter });
 
-    server.use(function (req, res, next) {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "X-Requested-With");
-      next();
-    });
+    // server.use(function (req, res, next) {
+    //   res.header("Access-Control-Allow-Origin", "*");
+    //   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    //   res.header(
+    //     "Access-Control-Allow-Methods",
+    //     "GET",
+    //     "PATCH",
+    //     "POST",
+    //     "DELETE",
+    //     "OPTIONS"
+    //   );
+    //   next();
+    // });
+    server.use(cors());
 
     require("./routes/GET")({ server });
+    require("./routes/DELETE")({ server });
     require("./routes/POST")({ server, upload });
   } catch (error) {
     console.log("error", error);

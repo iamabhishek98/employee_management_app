@@ -43,8 +43,16 @@ const EmployeeData = () => {
         `http://localhost:5001/users/?minSalary=${minSalary}&maxSalary=${maxSalary}&offset=${offset}&limit=${limit}&sort=${sign}${sortBy}`
       )
       .then((res) => {
-        setUsers(res.data.message);
+        setUsers(res.data.results);
       });
+  };
+
+  const deleteUser = (id) => {
+    axios.delete(`http://localhost:5001/users/${id}`).then((res) => {
+      if (res.data.status === "success") {
+        fetchUsers();
+      }
+    });
   };
 
   const nextPage = () => {
@@ -159,6 +167,7 @@ const EmployeeData = () => {
         sortOrder={sortOrder}
         sortBy={sortBy}
         requestSort={requestSort}
+        deleteUser={deleteUser}
       />
     </div>
   );

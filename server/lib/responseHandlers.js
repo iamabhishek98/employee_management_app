@@ -1,7 +1,7 @@
 const successHandler = (res, msg) => {
   return res.status(200).json({
     status: "success",
-    message: msg,
+    results: msg,
   });
 };
 

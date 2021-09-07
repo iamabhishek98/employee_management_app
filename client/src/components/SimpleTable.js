@@ -109,7 +109,9 @@ const SimpleTable = (props) => {
                   <TableCell>$ {item.salary}</TableCell>
                   <TableCell>
                     {editIcon}
-                    {deleteIcon}
+                    <span onClick={() => props.deleteUser(item.id)}>
+                      {deleteIcon}
+                    </span>
                   </TableCell>
                 </TableRow>
               );
