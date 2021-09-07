@@ -75,7 +75,7 @@ const EmployeeFileUpload = () => {
         );
       } else {
         console.log(err.response);
-        setMessage(err.response.data.message);
+        setMessage(err.response.data.error);
       }
       setUploadPercentage(0);
       // setFile("");

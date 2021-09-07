@@ -42,7 +42,7 @@ const EmployeeData = () => {
     const res = await axios.get(
       `http://localhost:5001/users/?minSalary=${minSalary}&maxSalary=${maxSalary}&offset=${offset}&limit=${limit}&sort=${sign}${sortBy}`
     );
-    if (res.data && res.data.status === "success") {
+    if (res.status === 200) {
       setTotalPageCount(Math.ceil(res.data.results.count / limit));
       setUsers(res.data.results.rows);
     }
@@ -50,7 +50,7 @@ const EmployeeData = () => {
 
   const deleteUser = async (id) => {
     const res = await axios.delete(`http://localhost:5001/users/${id}`);
-    if (res.data && res.data.status === "success") {
+    if (res.status === 200) {
       fetchUsers();
       if (users.length <= 1 && currPage > 1) {
         previousPage();
