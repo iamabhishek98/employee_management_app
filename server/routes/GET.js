@@ -7,22 +7,22 @@ module.exports = ({ server }) => {
     try {
       const { minSalary, maxSalary, offset, limit, sort } = req.query;
       if (!(minSalary && maxSalary && offset && limit && sort)) {
-        return errorHandler(res, "Missing required request params!");
+        throw "Missing required request params!";
       }
 
       if (
         !(checkValidSalary(minSalary) && checkValidSalary(minSalary)) ||
         minSalary > maxSalary
       ) {
-        return errorHandler(res, "Invalid salary range values!");
+        throw "Invalid salary range values!";
       }
 
       if (isNaN(offset) || offset < 0) {
-        return errorHandler(res, "Invalid offset value!");
+        throw "Invalid offset value!";
       }
 
       if (isNaN(limit) || limit < 0) {
-        return errorHandler(res, "Invalid limit value!");
+        throw "Invalid limit value!";
       }
 
       // look into why plus sign is not working and why need to use space instead
@@ -33,7 +33,7 @@ module.exports = ({ server }) => {
           ["id", "login", "name", "salary"].includes(sort.substring(1))
         )
       ) {
-        return errorHandler(res, "Invalid sort params!");
+        throw "Invalid sort params!";
       }
 
       const sortOrder = sort[0] === "-" ? "DESC" : "ASC";
@@ -50,7 +50,7 @@ module.exports = ({ server }) => {
 
       return successHandler(res, results);
     } catch (error) {
-      console.log(`catch error: ${error}`);
+      return errorHandler(res, error);
     }
   });
 
@@ -61,12 +61,12 @@ module.exports = ({ server }) => {
       const user = await fetchEmployee(id);
 
       if (!user) {
-        return errorHandler(res, "User not found!");
+        throw "User not found!";
       }
 
       return successHandler(res, user);
     } catch (error) {
-      console.log(`catch error: ${error}`);
+      return errorHandler(res, error);
     }
   });
 };

@@ -9,12 +9,12 @@ module.exports = ({ server }) => {
       const user = await deleteEmployee(id);
 
       if (!user) {
-        errorHandler(res, "User not found!");
-      } else {
-        successHandler(res, "User deleted!");
+        throw "User not found!";
       }
+
+      return successHandler(res, "User deleted!");
     } catch (error) {
-      console.log(`catch error: ${error}`);
+      return errorHandler(res, error);
     }
   });
 };

@@ -9,7 +9,7 @@ module.exports = ({ server }) => {
   server.post("/users/upload", upload.single("file"), async (req, res) => {
     try {
       if (
-        req.file == undefined ||
+        req.file === undefined ||
         req.file.mimetype !== "text/csv" ||
         !req.file.originalname.endsWith(".csv")
       ) {
@@ -29,8 +29,6 @@ module.exports = ({ server }) => {
         `Successfully uploaded the CSV data from the file: ${req.file.originalname}`
       );
     } catch (error) {
-      console.log(`catch error: ${error}`);
-
       return errorHandler(res, error);
     }
   });
