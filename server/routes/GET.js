@@ -44,7 +44,7 @@ module.exports = ({ server }) => {
       const SORT = sort[0] === "-" ? "DESC" : "ASC";
       const SORT_PARAM = sort.substring(1);
 
-      const results = await Employee.findAll({
+      const results = await Employee.findAndCountAll({
         where: {
           salary: {
             [Sequelize.Op.between]: [MIN_SALARY, MAX_SALARY],

@@ -32,7 +32,8 @@ const EmployeeData = () => {
   const [minSalaryError, setMinSalaryError] = useState(false);
   const [maxSalaryError, setMaxSalaryError] = useState(false);
 
-  const [pageCount, setPageCount] = useState(1);
+  const [totalPageCount, setTotalPageCount] = useState(0);
+  const [currPage, setCurrPage] = useState(1);
   const [limit, setLimit] = useState(DEFAULT_LIMIT);
   const [offset, setOffset] = useState(0);
 
@@ -43,7 +44,8 @@ const EmployeeData = () => {
         `http://localhost:5001/users/?minSalary=${minSalary}&maxSalary=${maxSalary}&offset=${offset}&limit=${limit}&sort=${sign}${sortBy}`
       )
       .then((res) => {
-        setUsers(res.data.results);
+        setTotalPageCount(Math.ceil(res.data.results.count / limit));
+        setUsers(res.data.results.rows);
       });
   };
 
@@ -56,13 +58,17 @@ const EmployeeData = () => {
   };
 
   const nextPage = () => {
-    setPageCount(pageCount + 1);
-    setOffset(offset + limit);
+    if (currPage < totalPageCount) {
+      setCurrPage(currPage + 1);
+      setOffset(offset + limit);
+    }
   };
 
   const previousPage = () => {
-    setPageCount(Math.max(pageCount - 1, 1));
-    setOffset(Math.max(offset - limit, 0));
+    if (currPage > 1) {
+      setCurrPage(currPage - 1);
+      setOffset(Math.max(offset - limit, 0));
+    }
   };
 
   const requestSort = (pSortBy) => {
@@ -70,7 +76,7 @@ const EmployeeData = () => {
     let newSortBy = sortBy;
     let newLimit = limit;
     let newOffset = offset;
-    let newPageCount = pageCount;
+    let newPageCount = currPage;
 
     return () => {
       if (pSortBy === sortBy) {
@@ -87,7 +93,7 @@ const EmployeeData = () => {
       setSortOrder(newSortOrder);
       setLimit(newLimit);
       setOffset(newOffset);
-      setPageCount(newPageCount);
+      setCurrPage(newPageCount);
     };
   };
 
@@ -118,7 +124,7 @@ const EmployeeData = () => {
 
     console.log("range", minSalary, maxSalary);
     setOffset(0);
-    setPageCount(1);
+    setCurrPage(1);
     fetchUsers();
   };
 
@@ -157,7 +163,7 @@ const EmployeeData = () => {
         <IconButton>
           <ArrowBackIosIcon color="#000" onClick={previousPage} />
         </IconButton>
-        {pageCount}{" "}
+        {currPage}{" "}
         <IconButton>
           <ArrowForwardIosIcon color="#000" onClick={nextPage} />
         </IconButton>
