@@ -1,9 +1,8 @@
 const csv = require("fast-csv");
 const fs = require("fs");
-const Employee = require("../models/Employee");
-const db = require("../config/database");
 const { successHandler, errorHandler } = require("../lib/responseHandlers");
 const { checkValidSalary } = require("../lib/helper");
+const { upsertMultipleEmployees } = require("../db/queries");
 
 module.exports = ({ server, upload }) => {
   // Upload CSV file using Express Rest APIs
@@ -55,28 +54,16 @@ module.exports = ({ server, upload }) => {
           // check for concurrency (either implement this or reject consequent uploads)
           // later test with chinese names to see if varchar works
 
-          const t = await db.transaction();
+          const createEmployees = await upsertMultipleEmployees(csvData);
 
-          try {
-            await Employee.bulkCreate(
-              csvData,
-              {
-                fields: ["id", "login", "name", "salary"],
-                updateOnDuplicate: ["id", "login", "name", "salary"],
-              },
-              { transaction: t }
-            );
-
-            await t.commit();
-
-            return successHandler(
-              res,
-              `Successfully uploaded the CSV data from the file: ${req.file.originalname}`
-            );
-          } catch (error) {
-            await t.rollback();
+          if (!createEmployees) {
             return errorHandler(res, "Unable to insert rows into db!");
           }
+
+          return successHandler(
+            res,
+            `Successfully uploaded the CSV data from the file: ${req.file.originalname}`
+          );
         });
     } catch (error) {
       console.log(`catch error: ${error}`);

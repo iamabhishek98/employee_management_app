@@ -1,7 +1,6 @@
-const Sequelize = require("sequelize");
-const Employee = require("../models/Employee");
 const { successHandler, errorHandler } = require("../lib/responseHandlers");
 const { checkValidSalary } = require("../lib/helper");
+const { fetchEmployee, fetchMultipleEmployees } = require("../db/queries");
 
 module.exports = ({ server }) => {
   server.get("/users", async (req, res) => {
@@ -37,24 +36,17 @@ module.exports = ({ server }) => {
         return errorHandler(res, "Invalid sort params!");
       }
 
-      const MIN_SALARY = minSalary;
-      const MAX_SALARY = maxSalary;
-      const LIMIT = limit;
-      const OFFSET = offset;
-      const SORT = sort[0] === "-" ? "DESC" : "ASC";
-      const SORT_PARAM = sort.substring(1);
+      const sortOrder = sort[0] === "-" ? "DESC" : "ASC";
+      const sortColumn = sort.substring(1);
 
-      const results = await Employee.findAndCountAll({
-        where: {
-          salary: {
-            [Sequelize.Op.between]: [MIN_SALARY, MAX_SALARY],
-          },
-        },
-        order: [[SORT_PARAM, SORT]],
-        limit: LIMIT,
-        offset: OFFSET,
-        raw: true,
-      });
+      const results = await fetchMultipleEmployees(
+        minSalary,
+        maxSalary,
+        sortColumn,
+        sortOrder,
+        limit,
+        offset
+      );
 
       return successHandler(res, results);
     } catch (error) {
@@ -66,13 +58,13 @@ module.exports = ({ server }) => {
     try {
       const { id } = req.params;
 
-      const user = await Employee.findOne({ where: { id: id }, raw: true });
+      const user = await fetchEmployee(id);
 
-      if (!user) {
-        errorHandler(res, "User not found!");
-      } else {
-        successHandler(res, user);
+      if (user) {
+        return errorHandler(res, "User not found!");
       }
+
+      return successHandler(res, user);
     } catch (error) {
       console.log(`catch error: ${error}`);
     }

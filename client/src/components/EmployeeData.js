@@ -37,24 +37,25 @@ const EmployeeData = () => {
   const [limit, setLimit] = useState(DEFAULT_LIMIT);
   const [offset, setOffset] = useState(0);
 
-  const fetchUsers = () => {
+  const fetchUsers = async () => {
     const sign = sortOrder === "asc" ? "+" : "-";
-    axios
-      .get(
-        `http://localhost:5001/users/?minSalary=${minSalary}&maxSalary=${maxSalary}&offset=${offset}&limit=${limit}&sort=${sign}${sortBy}`
-      )
-      .then((res) => {
-        setTotalPageCount(Math.ceil(res.data.results.count / limit));
-        setUsers(res.data.results.rows);
-      });
+    const res = await axios.get(
+      `http://localhost:5001/users/?minSalary=${minSalary}&maxSalary=${maxSalary}&offset=${offset}&limit=${limit}&sort=${sign}${sortBy}`
+    );
+    if (res.data && res.data.status === "success") {
+      setTotalPageCount(Math.ceil(res.data.results.count / limit));
+      setUsers(res.data.results.rows);
+    }
   };
 
-  const deleteUser = (id) => {
-    axios.delete(`http://localhost:5001/users/${id}`).then((res) => {
-      if (res.data.status === "success") {
-        fetchUsers();
+  const deleteUser = async (id) => {
+    const res = await axios.delete(`http://localhost:5001/users/${id}`);
+    if (res.data && res.data.status === "success") {
+      fetchUsers();
+      if (users.length <= 1 && currPage > 1) {
+        previousPage();
       }
-    });
+    }
   };
 
   const nextPage = () => {

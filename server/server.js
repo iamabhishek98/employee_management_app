@@ -1,7 +1,7 @@
 const express = require("express");
 const server = express();
 const multer = require("multer");
-const db = require("./config/database");
+const db = require("./db/config");
 const cors = require("cors");
 
 const PORT = 5001; // put env
