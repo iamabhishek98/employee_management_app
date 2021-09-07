@@ -1,5 +1,5 @@
 const papa = require("papaparse");
-const { checkValidSalary, checkValidRows } = require("./validationHandler");
+const { checkValidRows } = require("./validationHandlers");
 
 const parseCsv = (csvFile) => {
   const config = {

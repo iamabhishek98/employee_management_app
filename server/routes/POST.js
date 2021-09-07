@@ -1,7 +1,7 @@
 const { successHandler, errorHandler } = require("../lib/responseHandlers");
 const { upsertMultipleEmployees } = require("../db/queries");
 const multer = require("multer");
-const { parseCsv } = require("../lib/fileHandler");
+const { parseCsv } = require("../lib/fileHandlers");
 
 module.exports = ({ server }) => {
   const upload = multer({ storage: multer.memoryStorage() });

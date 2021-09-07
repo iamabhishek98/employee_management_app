@@ -1,5 +1,5 @@
 const { successHandler, errorHandler } = require("../lib/responseHandlers");
-const { checkValidSalary } = require("../lib/validationHandler");
+const { checkValidSalary } = require("../lib/validationHandlers");
 const { fetchEmployee, fetchMultipleEmployees } = require("../db/queries");
 
 module.exports = ({ server }) => {
