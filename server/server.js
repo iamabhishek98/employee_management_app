@@ -25,9 +25,8 @@ try {
 
   if (process.env.NODE_ENV !== "test") {
     server.listen(PORT);
+    console.log("App Server running at - http://localhost:%s", PORT);
   }
-
-  console.log("App Server running at - http://localhost:%s", PORT);
 } catch (err) {
   console.log("error", err);
 }

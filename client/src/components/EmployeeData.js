@@ -23,8 +23,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EmployeeData = () => {
-  const DEFAULT_LIMIT = 2; // supposed to be 30
-
   const [users, setUsers] = useState([]);
   const [sortBy, setSortBy] = useState("id"); // id, login, name, salary
   const [sortOrder, setSortOrder] = useState("asc"); // + or -
@@ -35,7 +33,7 @@ const EmployeeData = () => {
 
   const [totalPageCount, setTotalPageCount] = useState(0);
   const [currPage, setCurrPage] = useState(1);
-  const [limit, setLimit] = useState(DEFAULT_LIMIT);
+  const [limit, setLimit] = useState(30);
   const [offset, setOffset] = useState(0);
 
   const [openPopup, setOpenPopup] = useState(false);
@@ -111,7 +109,7 @@ const EmployeeData = () => {
       } else {
         newSortBy = pSortBy;
         newSortOrder = "asc";
-        newLimit = DEFAULT_LIMIT;
+        newLimit = 30;
         newOffset = 0;
         newPageCount = 1;
       }

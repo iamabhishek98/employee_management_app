@@ -1,7 +1,7 @@
 const request = require("supertest");
-const server = require("../server.js");
-const Employee = require("../db/models/Employee");
-const { users } = require("./testData");
+const server = require("../../server.js");
+const Employee = require("../../db/models/Employee");
+const { users } = require("../TestData");
 
 describe("GET", () => {
   beforeAll(async () => {

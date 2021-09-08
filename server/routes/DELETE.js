@@ -1,4 +1,4 @@
-const { successHandler, errorHandler } = require("../lib/responseHandlers");
+const { successHandler, errorHandler } = require("../lib/ResponseHandlers");
 const { deleteEmployee } = require("../db/queries");
 
 module.exports = ({ server }) => {
