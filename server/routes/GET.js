@@ -1,6 +1,6 @@
 const { successHandler, errorHandler } = require("../lib/ResponseHandlers");
 const { checkValidSalary } = require("../lib/ValidationHandlers");
-const { fetchEmployee, fetchMultipleEmployees } = require("../db/queries");
+const { fetchEmployee, fetchMultipleEmployees } = require("../db/Queries");
 
 module.exports = ({ server }) => {
   server.get("/users", async (req, res) => {

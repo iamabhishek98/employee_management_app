@@ -10,7 +10,7 @@ services:
   server:
     image: server
     ports:
-      - "5001:5001"
+      - "5000:5000"
     networks:
       - employee-management-app
     depends_on:

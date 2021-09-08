@@ -44,7 +44,7 @@ const EmployeeFileUpload = () => {
     formData.append("file", new File([file], file.name, { type: "text/csv" }));
     try {
       const res = await axios.post(
-        "http://localhost:5001/users/upload",
+        "http://localhost:5000/users/upload",
         formData,
         {
           headers: {

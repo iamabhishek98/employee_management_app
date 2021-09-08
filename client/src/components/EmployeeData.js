@@ -48,7 +48,7 @@ const EmployeeData = () => {
     const sign = sortOrder === "asc" ? "+" : "-";
     axios
       .get(
-        `http://localhost:5001/users/?minSalary=${minSalary}&maxSalary=${maxSalary}&offset=${offset}&limit=${limit}&sort=${sign}${sortBy}`
+        `http://localhost:5000/users/?minSalary=${minSalary}&maxSalary=${maxSalary}&offset=${offset}&limit=${limit}&sort=${sign}${sortBy}`
       )
       .then((res) => {
         if (res.status === 200) {
@@ -59,7 +59,7 @@ const EmployeeData = () => {
   };
 
   const deleteEmployee = (id) => {
-    axios.delete(`http://localhost:5001/users/${id}`).then((res) => {
+    axios.delete(`http://localhost:5000/users/${id}`).then((res) => {
       if (res.status === 200) {
         fetchEmployees();
         if (employees.length <= 1 && currPage > 1) {
@@ -76,7 +76,7 @@ const EmployeeData = () => {
       name: editedEmployeeName,
       salary: editedEmployeeSalary,
     };
-    axios.patch("http://localhost:5001/users", employee).then((res) => {
+    axios.patch("http://localhost:5000/users", employee).then((res) => {
       if (res.status === 200) {
         fetchEmployees();
       }

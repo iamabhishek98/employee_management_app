@@ -6,7 +6,7 @@ const multer = require("multer");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
-const PORT = 5001; // put env
+const PORT = 5000;
 
 try {
   db.authenticate()
