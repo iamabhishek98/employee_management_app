@@ -19,13 +19,10 @@ module.exports = ({ server, upload }) => {
       const upsertEmployeesResponse = await upsertMultipleEmployees(employees);
 
       if (!upsertEmployeesResponse) {
-        throw "Employees could not be created!";
+        throw "Employees could not be created/updated!";
       }
 
-      return successHandler(
-        res,
-        `Successfully uploaded the CSV data from the file: ${req.file.originalname}`
-      );
+      return successHandler(res, "Successfully created/updated employees!");
     } catch (err) {
       return errorHandler(res, err);
     }

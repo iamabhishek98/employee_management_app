@@ -26,7 +26,7 @@ describe("DELETE", () => {
       });
     });
 
-    describe("valid id", () => {
+    describe("invalid id", () => {
       it("should throw error when user cannot be found", async () => {
         const res = await request(server).delete("/users/e006");
 

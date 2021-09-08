@@ -84,7 +84,7 @@ describe("PATCH", () => {
         expect(savedUsers).toEqual(users);
       });
 
-      it("should throw error when id is missing", async () => {
+      it("should throw error when required body values are missing", async () => {
         const invalidUser = {
           login: "logan@xyz.com",
           name: "Logan",
