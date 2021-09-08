@@ -28,12 +28,16 @@ const fetchMultipleEmployees = async (
 };
 
 const insertEmployee = async (id, login, name, salary) => {
-  return await Employee.create({
-    id: id,
-    login: login,
-    name: name,
-    salary: salary,
-  });
+  try {
+    return await Employee.create({
+      id: id,
+      login: login,
+      name: name,
+      salary: salary,
+    });
+  } catch (err) {
+    return false;
+  }
 };
 
 const updateEmployee = async (id, login, name, salary) => {

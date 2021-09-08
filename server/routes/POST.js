@@ -19,7 +19,7 @@ module.exports = ({ server, upload }) => {
       const upsertEmployeesResponse = await upsertMultipleEmployees(employees);
 
       if (!upsertEmployeesResponse) {
-        throw "Unable to insert rows into db!";
+        throw "Employees could not be created!";
       }
 
       return successHandler(
@@ -36,10 +36,19 @@ module.exports = ({ server, upload }) => {
       const { id, login, name, salary } = req.body;
 
       if (!(id && login && name && salary) || !checkValidSalary(salary)) {
-        throw "Invalid params!";
+        throw "Invalid body!";
       }
 
-      await insertEmployee(id, login, name, salary);
+      const insertEmployeeResponse = await insertEmployee(
+        id,
+        login,
+        name,
+        salary
+      );
+
+      if (!insertEmployeeResponse) {
+        throw "Employee could not be created!";
+      }
 
       return successHandler(res, "Employee created!");
     } catch (err) {
