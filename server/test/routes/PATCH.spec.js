@@ -1,12 +1,12 @@
 const request = require("supertest");
 const server = require("../../server.js");
 const Employee = require("../../db/models/Employee");
-const { users } = require("../TestData");
+const employees = require("../TestData");
 
 describe("PATCH", () => {
   beforeEach(async () => {
     await Employee.destroy({ truncate: true });
-    await Employee.bulkCreate(users);
+    await Employee.bulkCreate(employees);
   });
 
   afterAll(async () => {
@@ -49,7 +49,7 @@ describe("PATCH", () => {
         expect(res.body).toEqual({ error: "Employee not found!" });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
 
       it("should throw error when login is not unique", async () => {
@@ -65,7 +65,7 @@ describe("PATCH", () => {
         expect(res.body).toEqual({ error: "Employee could not be updated!" });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
 
       it("should throw error when salary is invalid", async () => {
@@ -81,7 +81,7 @@ describe("PATCH", () => {
         expect(res.body).toEqual({ error: "Invalid body!" });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
 
       it("should throw error when required body values are missing", async () => {
@@ -96,7 +96,7 @@ describe("PATCH", () => {
         expect(res.body).toEqual({ error: "Invalid body!" });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
     });
   });

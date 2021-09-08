@@ -1,12 +1,12 @@
 const request = require("supertest");
 const server = require("../../server.js");
 const Employee = require("../../db/models/Employee");
-const { users } = require("../TestData");
+const employees = require("../TestData");
 
 describe("GET", () => {
   beforeAll(async () => {
     await Employee.destroy({ truncate: true });
-    await Employee.bulkCreate(users);
+    await Employee.bulkCreate(employees);
   });
 
   afterAll(async () => {
@@ -24,7 +24,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: users,
+            rows: employees,
           },
         });
       });
@@ -38,7 +38,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 3,
-            rows: users.slice(0, 3),
+            rows: employees.slice(0, 3),
           },
         });
       });
@@ -54,7 +54,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: users,
+            rows: employees,
           },
         });
       });
@@ -68,7 +68,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: users.slice(2),
+            rows: employees.slice(2),
           },
         });
       });
@@ -84,7 +84,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: users,
+            rows: employees,
           },
         });
       });
@@ -98,7 +98,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: users.slice(0, 2),
+            rows: employees.slice(0, 2),
           },
         });
       });
@@ -114,7 +114,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: users.slice().reverse(),
+            rows: employees.slice().reverse(),
           },
         });
       });
@@ -128,7 +128,13 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: [users[1], users[4], users[2], users[3], users[0]],
+            rows: [
+              employees[1],
+              employees[4],
+              employees[2],
+              employees[3],
+              employees[0],
+            ],
           },
         });
       });
@@ -142,7 +148,13 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: [users[0], users[3], users[2], users[4], users[1]],
+            rows: [
+              employees[0],
+              employees[3],
+              employees[2],
+              employees[4],
+              employees[1],
+            ],
           },
         });
       });
@@ -156,7 +168,13 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: [users[1], users[4], users[2], users[3], users[0]],
+            rows: [
+              employees[1],
+              employees[4],
+              employees[2],
+              employees[3],
+              employees[0],
+            ],
           },
         });
       });
@@ -170,7 +188,13 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: [users[0], users[3], users[2], users[4], users[1]],
+            rows: [
+              employees[0],
+              employees[3],
+              employees[2],
+              employees[4],
+              employees[1],
+            ],
           },
         });
       });
@@ -184,7 +208,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: users,
+            rows: employees,
           },
         });
       });
@@ -198,7 +222,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: users.slice().reverse(),
+            rows: employees.slice().reverse(),
           },
         });
       });
@@ -362,11 +386,11 @@ describe("GET", () => {
   describe("/users/${id}", () => {
     describe("valid id", () => {
       it("should respond with expected user", async () => {
-        const res = await request(server).get(`/users/${users[0].id}`);
+        const res = await request(server).get(`/users/${employees[0].id}`);
 
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual({
-          results: users[0],
+          results: employees[0],
         });
       });
     });

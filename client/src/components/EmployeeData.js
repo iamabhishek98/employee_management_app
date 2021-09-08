@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EmployeeData = () => {
-  const [users, setUsers] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [sortBy, setSortBy] = useState("id");
   const [sortOrder, setSortOrder] = useState("asc");
   const [minSalary, setMinSalary] = useState(0);
@@ -37,13 +37,14 @@ const EmployeeData = () => {
   const [offset, setOffset] = useState(0);
 
   const [openPopup, setOpenPopup] = useState(false);
-  const [editedUserId, setEditedUserId] = useState("");
-  const [editedUserLogin, setEditedUserLogin] = useState("");
-  const [editedUserName, setEditedUserName] = useState("");
-  const [editedUserSalary, setEditedUserSalary] = useState("");
-  const [editedUserSalaryError, setEditedUserSalaryError] = useState("");
+  const [editedEmployeeId, setEditedEmployeeId] = useState("");
+  const [editedEmployeeLogin, setEditedEmployeeLogin] = useState("");
+  const [editedEmployeeName, setEditedEmployeeName] = useState("");
+  const [editedEmployeeSalary, setEditedEmployeeSalary] = useState("");
+  const [editedEmployeeSalaryError, setEditedEmployeeSalaryError] =
+    useState("");
 
-  const fetchUsers = () => {
+  const fetchEmployees = () => {
     const sign = sortOrder === "asc" ? "+" : "-";
     axios
       .get(
@@ -52,32 +53,32 @@ const EmployeeData = () => {
       .then((res) => {
         if (res.status === 200) {
           setTotalPageCount(Math.ceil(res.data.results.count / limit));
-          setUsers(res.data.results.rows);
+          setEmployees(res.data.results.rows);
         }
       });
   };
 
-  const deleteUser = (id) => {
+  const deleteEmployee = (id) => {
     axios.delete(`http://localhost:5001/users/${id}`).then((res) => {
       if (res.status === 200) {
-        fetchUsers();
-        if (users.length <= 1 && currPage > 1) {
+        fetchEmployees();
+        if (employees.length <= 1 && currPage > 1) {
           previousPage();
         }
       }
     });
   };
 
-  const editUser = () => {
-    const user = {
-      id: editedUserId,
-      login: editedUserLogin,
-      name: editedUserName,
-      salary: editedUserSalary,
+  const editEmployee = () => {
+    const employee = {
+      id: editedEmployeeId,
+      login: editedEmployeeLogin,
+      name: editedEmployeeName,
+      salary: editedEmployeeSalary,
     };
-    axios.patch("http://localhost:5001/users", user).then((res) => {
+    axios.patch("http://localhost:5001/users", employee).then((res) => {
       if (res.status === 200) {
-        fetchUsers();
+        fetchEmployees();
       }
     });
   };
@@ -123,11 +124,11 @@ const EmployeeData = () => {
   };
 
   const showPopup = (id, login, name, salary) => {
-    setEditedUserId(id);
-    setEditedUserLogin(login);
-    setEditedUserName(name);
-    setEditedUserSalary(salary);
-    setEditedUserSalaryError("");
+    setEditedEmployeeId(id);
+    setEditedEmployeeLogin(login);
+    setEditedEmployeeName(name);
+    setEditedEmployeeSalary(salary);
+    setEditedEmployeeSalaryError("");
     setOpenPopup(true);
   };
 
@@ -150,32 +151,32 @@ const EmployeeData = () => {
 
     setOffset(0);
     setCurrPage(1);
-    fetchUsers();
+    fetchEmployees();
   };
 
-  const handleSubmitUser = async (e) => {
+  const handleSubmitEmployee = async (e) => {
     e.preventDefault();
 
-    if (!isNaN(editedUserSalary) && parseFloat(editedUserSalary) >= 0) {
-      setEditedUserSalaryError("");
+    if (!isNaN(editedEmployeeSalary) && parseFloat(editedEmployeeSalary) >= 0) {
+      setEditedEmployeeSalaryError("");
     } else {
-      setEditedUserSalaryError("Invalid Salary!");
+      setEditedEmployeeSalaryError("Invalid Salary!");
       return;
     }
 
-    editUser();
+    editEmployee();
 
     setOpenPopup(false);
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchEmployees();
   }, [sortBy, sortOrder, limit, offset]);
 
   const classes = useStyles();
 
   const returnTable = () => {
-    if (!users || !users.length) {
+    if (!employees || !employees.length) {
       return <h3>No Employees Found!</h3>;
     }
 
@@ -191,11 +192,11 @@ const EmployeeData = () => {
           </IconButton>
         </div>
         <SimpleTable
-          users={users}
+          employees={employees}
           sortOrder={sortOrder}
           sortBy={sortBy}
           requestSort={requestSort}
-          deleteUser={deleteUser}
+          deleteEmployee={deleteEmployee}
           showPopup={showPopup}
         />
       </>
@@ -236,44 +237,44 @@ const EmployeeData = () => {
       </form>
       {returnTable()}
       <Popup
-        title="Edit User"
+        title="Edit Employee"
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
-        <form onSubmit={handleSubmitUser}>
+        <form onSubmit={handleSubmitEmployee}>
           <div>
             <TextField
-              onChange={(e) => setEditedUserLogin(e.target.value)}
+              onChange={(e) => setEditedEmployeeLogin(e.target.value)}
               className={classes.spacing}
               required
               id="filled-required"
-              defaultValue={editedUserLogin}
+              defaultValue={editedEmployeeLogin}
               label="Login"
               variant="filled"
             />
           </div>
           <div>
             <TextField
-              onChange={(e) => setEditedUserName(e.target.value)}
+              onChange={(e) => setEditedEmployeeName(e.target.value)}
               className={classes.spacing}
               required
               id="filled-required"
-              defaultValue={editedUserName}
+              defaultValue={editedEmployeeName}
               label="Name"
               variant="filled"
             />
           </div>
           <div>
             <TextField
-              onChange={(e) => setEditedUserSalary(e.target.value)}
+              onChange={(e) => setEditedEmployeeSalary(e.target.value)}
               className={classes.spacing}
               required
               id="filled-required"
-              defaultValue={editedUserSalary}
+              defaultValue={editedEmployeeSalary}
               label="Salary ($)"
               variant="filled"
-              helperText={editedUserSalaryError}
-              error={editedUserSalaryError}
+              helperText={editedEmployeeSalaryError}
+              error={editedEmployeeSalaryError}
             />
           </div>
           <Button className={classes.blueButton} type="submit">

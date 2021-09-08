@@ -1,4 +1,4 @@
-const users = [
+const employees = [
   {
     id: "e001",
     login: "sandy@xyz.com",
@@ -31,4 +31,4 @@ const users = [
   },
 ];
 
-module.exports = { users };
+module.exports = employees;

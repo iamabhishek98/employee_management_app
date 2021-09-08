@@ -82,7 +82,7 @@ const SimpleTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.users.map((item, indx) => {
+          {props.employees.map((item, indx) => {
             return (
               <TableRow key={indx}>
                 <TableCell>{item.id}</TableCell>
@@ -102,7 +102,7 @@ const SimpleTable = (props) => {
                   >
                     <EditIcon color="primary" />
                   </IconButton>
-                  <IconButton onClick={() => props.deleteUser(item.id)}>
+                  <IconButton onClick={() => props.deleteEmployee(item.id)}>
                     <DeleteIcon color="secondary" />
                   </IconButton>
                 </TableCell>

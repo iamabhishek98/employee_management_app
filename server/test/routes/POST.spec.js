@@ -1,12 +1,12 @@
 const request = require("supertest");
 const server = require("../../server.js");
 const Employee = require("../../db/models/Employee");
-const { users } = require("../TestData");
+const employees = require("../TestData");
 
 describe("POST", () => {
   beforeEach(async () => {
     await Employee.destroy({ truncate: true });
-    await Employee.bulkCreate(users);
+    await Employee.bulkCreate(employees);
   });
 
   afterAll(async () => {
@@ -49,7 +49,7 @@ describe("POST", () => {
         expect(res.body).toEqual({ error: "Employee could not be created!" });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
 
       it("should throw error when login is not unique", async () => {
@@ -65,7 +65,7 @@ describe("POST", () => {
         expect(res.body).toEqual({ error: "Employee could not be created!" });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
 
       it("should throw error when salary is invalid", async () => {
@@ -81,7 +81,7 @@ describe("POST", () => {
         expect(res.body).toEqual({ error: "Invalid body!" });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
 
       it("should throw error when required body values are missing", async () => {
@@ -96,7 +96,7 @@ describe("POST", () => {
         expect(res.body).toEqual({ error: "Invalid body!" });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
     });
   });
@@ -178,7 +178,7 @@ describe("POST", () => {
         });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
 
       it("should throw error when file is not CSV", async () => {
@@ -192,7 +192,7 @@ describe("POST", () => {
         });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
 
       it("should throw error when file is empty", async () => {
@@ -206,7 +206,7 @@ describe("POST", () => {
         });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
 
       it("should throw error when file contains incorrect column values", async () => {
@@ -220,7 +220,7 @@ describe("POST", () => {
         });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
 
       it("should throw error when file contains invalid salary values", async () => {
@@ -235,7 +235,7 @@ describe("POST", () => {
         });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
     });
   });

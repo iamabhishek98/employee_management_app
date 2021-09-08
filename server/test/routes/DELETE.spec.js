@@ -1,12 +1,12 @@
 const request = require("supertest");
 const server = require("../../server.js");
 const Employee = require("../../db/models/Employee");
-const { users } = require("../TestData");
+const employees = require("../TestData");
 
 describe("DELETE", () => {
   beforeEach(async () => {
     await Employee.destroy({ truncate: true });
-    await Employee.bulkCreate(users);
+    await Employee.bulkCreate(employees);
   });
 
   afterAll(async () => {
@@ -22,7 +22,7 @@ describe("DELETE", () => {
         expect(res.body).toEqual({ results: "Employee deleted!" });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users.slice(1));
+        expect(savedUsers).toEqual(employees.slice(1));
       });
     });
 
@@ -34,7 +34,7 @@ describe("DELETE", () => {
         expect(res.body).toEqual({ error: "Employee not found!" });
 
         const savedUsers = await Employee.findAll({ raw: true });
-        expect(savedUsers).toEqual(users);
+        expect(savedUsers).toEqual(employees);
       });
     });
   });
