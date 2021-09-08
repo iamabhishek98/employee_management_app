@@ -25,7 +25,6 @@ module.exports = ({ server }) => {
         throw "Invalid limit value!";
       }
 
-      // look into why plus sign is not working and why need to use space instead
       if (
         !(
           sort.length > 2 &&
