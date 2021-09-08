@@ -28,7 +28,7 @@ try {
     console.log("App Server running at - http://localhost:%s", PORT);
   }
 } catch (err) {
-  console.log("error", err);
+  console.log("error:", err);
 }
 
 module.exports = server;

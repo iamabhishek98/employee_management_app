@@ -5,8 +5,6 @@ const successHandler = (res, msg) => {
 };
 
 const errorHandler = (res, err) => {
-  console.log(`Sent error response: ${err}`);
-
   return res.status(400).json({
     error: err,
   });
