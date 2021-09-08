@@ -3,7 +3,7 @@ const { upsertMultipleEmployees, insertEmployee } = require("../db/queries");
 const { parseCsv } = require("../lib/fileHandlers");
 const { checkValidSalary } = require("../lib/validationHandlers");
 
-module.exports = ({ server, jsonParser, upload }) => {
+module.exports = ({ server, upload }) => {
   server.post("/users/upload", upload.single("file"), async (req, res) => {
     try {
       if (
@@ -31,7 +31,7 @@ module.exports = ({ server, jsonParser, upload }) => {
     }
   });
 
-  server.post("/users", jsonParser, async (req, res) => {
+  server.post("/users", async (req, res) => {
     try {
       const { id, login, name, salary } = req.body;
 

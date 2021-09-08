@@ -37,12 +37,16 @@ const insertEmployee = async (id, login, name, salary) => {
 };
 
 const updateEmployee = async (id, login, name, salary) => {
-  return await Employee.update(
-    { login: login, name: name, salary: salary },
-    {
-      where: { id: id },
-    }
-  );
+  try {
+    return await Employee.update(
+      { login: login, name: name, salary: salary },
+      {
+        where: { id: id },
+      }
+    );
+  } catch (err) {
+    return false;
+  }
 };
 
 const deleteEmployee = async (id) => {

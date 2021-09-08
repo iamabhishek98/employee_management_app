@@ -2,13 +2,13 @@ const { successHandler, errorHandler } = require("../lib/responseHandlers");
 const { checkValidSalary } = require("../lib/validationHandlers");
 const { updateEmployee } = require("../db/queries");
 
-module.exports = ({ server, jsonParser }) => {
-  server.patch("/users", jsonParser, async (req, res) => {
+module.exports = ({ server }) => {
+  server.patch("/users", async (req, res) => {
     try {
       const { id, login, name, salary } = req.body;
 
       if (!(id && login && name && salary) || !checkValidSalary(salary)) {
-        throw "Invalid params!";
+        throw "Invalid body!";
       }
 
       const updateEmployeeResponse = await updateEmployee(
@@ -17,6 +17,10 @@ module.exports = ({ server, jsonParser }) => {
         name,
         salary
       );
+
+      if (!updateEmployeeResponse) {
+        throw "Employee could not be updated!";
+      }
 
       if (!updateEmployeeResponse[0]) {
         throw "Employee not found!";

@@ -14,13 +14,13 @@ try {
     .catch((err) => console.log(`DB error: ${err}`));
 
   server.use(cors());
+  server.use(bodyParser.json());
 
-  const jsonParser = bodyParser.json();
   const upload = multer({ storage: multer.memoryStorage() });
 
   require("./routes/GET")({ server: server });
-  require("./routes/POST")({ server: server, jsonParser, upload });
-  require("./routes/PATCH")({ server: server, jsonParser });
+  require("./routes/POST")({ server: server, upload });
+  require("./routes/PATCH")({ server: server });
   require("./routes/DELETE")({ server: server });
 
   if (process.env.NODE_ENV !== "test") {
