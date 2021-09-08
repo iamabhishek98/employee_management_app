@@ -1,44 +1,12 @@
 const request = require("supertest");
 const server = require("../server.js");
 const Employee = require("../db/models/Employee");
-
-const userData = [
-  {
-    id: "e001",
-    login: "sandy@xyz.com",
-    name: "Sandy",
-    salary: 10,
-  },
-  {
-    id: "e002",
-    login: "andy@xyz.com",
-    name: "Andy",
-    salary: 100,
-  },
-  {
-    id: "e003",
-    login: "jason@xyz.com",
-    name: "Jason",
-    salary: 1000,
-  },
-  {
-    id: "e004",
-    login: "mary@xyz.com",
-    name: "Mary",
-    salary: 10000,
-  },
-  {
-    id: "e005",
-    login: "jane@xyz.com",
-    name: "Jane",
-    salary: 100000,
-  },
-];
+const { users } = require("./testData");
 
 describe("GET", () => {
   beforeAll(async () => {
     await Employee.destroy({ truncate: true });
-    await Employee.bulkCreate(userData);
+    await Employee.bulkCreate(users);
   });
 
   afterAll(async () => {
@@ -56,7 +24,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: userData,
+            rows: users,
           },
         });
       });
@@ -70,7 +38,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 3,
-            rows: userData.slice(0, 3),
+            rows: users.slice(0, 3),
           },
         });
       });
@@ -86,7 +54,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: userData,
+            rows: users,
           },
         });
       });
@@ -100,7 +68,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: userData.slice(2),
+            rows: users.slice(2),
           },
         });
       });
@@ -116,7 +84,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: userData,
+            rows: users,
           },
         });
       });
@@ -130,7 +98,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: userData.slice(0, 2),
+            rows: users.slice(0, 2),
           },
         });
       });
@@ -146,7 +114,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: userData.slice().reverse(),
+            rows: users.slice().reverse(),
           },
         });
       });
@@ -160,13 +128,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: [
-              userData[1],
-              userData[4],
-              userData[2],
-              userData[3],
-              userData[0],
-            ],
+            rows: [users[1], users[4], users[2], users[3], users[0]],
           },
         });
       });
@@ -180,13 +142,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: [
-              userData[0],
-              userData[3],
-              userData[2],
-              userData[4],
-              userData[1],
-            ],
+            rows: [users[0], users[3], users[2], users[4], users[1]],
           },
         });
       });
@@ -200,13 +156,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: [
-              userData[1],
-              userData[4],
-              userData[2],
-              userData[3],
-              userData[0],
-            ],
+            rows: [users[1], users[4], users[2], users[3], users[0]],
           },
         });
       });
@@ -220,13 +170,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: [
-              userData[0],
-              userData[3],
-              userData[2],
-              userData[4],
-              userData[1],
-            ],
+            rows: [users[0], users[3], users[2], users[4], users[1]],
           },
         });
       });
@@ -240,7 +184,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: userData,
+            rows: users,
           },
         });
       });
@@ -254,7 +198,7 @@ describe("GET", () => {
         expect(res.body).toEqual({
           results: {
             count: 5,
-            rows: userData.slice().reverse(),
+            rows: users.slice().reverse(),
           },
         });
       });
@@ -293,6 +237,15 @@ describe("GET", () => {
           error: "Invalid salary range values!",
         });
       });
+
+      it("should throw error when salary is missing", async () => {
+        const res = await request(server).get(
+          "/users?offset=0&limit=30&sort=+login"
+        );
+
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toEqual({ error: "Missing required request params!" });
+      });
     });
 
     describe("invalid offset", () => {
@@ -316,6 +269,15 @@ describe("GET", () => {
         expect(res.body).toEqual({
           error: "Invalid offset value!",
         });
+      });
+
+      it("should throw error when offset is missing", async () => {
+        const res = await request(server).get(
+          "/users?minSalary=0&maxSalary=100000&limit=30&sort=+login"
+        );
+
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toEqual({ error: "Missing required request params!" });
       });
     });
 
@@ -352,6 +314,15 @@ describe("GET", () => {
           error: "Invalid limit value!",
         });
       });
+
+      it("should throw error when limit is missing", async () => {
+        const res = await request(server).get(
+          "/users?minSalary=0&maxSalary=100000&offset=0&sort=+id"
+        );
+
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toEqual({ error: "Missing required request params!" });
+      });
     });
 
     describe("invalid sort", () => {
@@ -366,7 +337,7 @@ describe("GET", () => {
         });
       });
 
-      it("should throw error when sort value is invalid", async () => {
+      it("should throw error when sort type is invalid", async () => {
         const res = await request(server).get(
           "/users?minSalary=0&maxSalary=100000&offset=0&limit=30&sort=+email"
         );
@@ -376,17 +347,26 @@ describe("GET", () => {
           error: "Invalid sort params!",
         });
       });
+
+      it("should throw error when sort is missing", async () => {
+        const res = await request(server).get(
+          "/users?minSalary=0&maxSalary=100000&offset=0&limit=30"
+        );
+
+        expect(res.statusCode).toBe(400);
+        expect(res.body).toEqual({ error: "Missing required request params!" });
+      });
     });
   });
 
   describe("/users/${id}", () => {
     describe("valid id", () => {
       it("should respond with expected user", async () => {
-        const res = await request(server).get(`/users/${userData[0].id}`);
+        const res = await request(server).get(`/users/${users[0].id}`);
 
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual({
-          results: userData[0],
+          results: users[0],
         });
       });
     });

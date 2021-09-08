@@ -18,12 +18,14 @@ try {
   const jsonParser = bodyParser.json();
   const upload = multer({ storage: multer.memoryStorage() });
 
-  require("./routes/GET")({ server });
-  require("./routes/POST")({ server, jsonParser, upload });
-  require("./routes/PATCH")({ server, jsonParser });
-  require("./routes/DELETE")({ server });
+  require("./routes/GET")({ server: server });
+  require("./routes/POST")({ server: server, jsonParser, upload });
+  require("./routes/PATCH")({ server: server, jsonParser });
+  require("./routes/DELETE")({ server: server });
 
-  server.listen(PORT);
+  if (process.env.NODE_ENV !== "test") {
+    server.listen(PORT);
+  }
 
   console.log("App Server running at - http://localhost:%s", PORT);
 } catch (err) {
