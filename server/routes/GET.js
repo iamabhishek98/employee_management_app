@@ -21,7 +21,7 @@ module.exports = ({ server }) => {
         throw "Invalid offset value!";
       }
 
-      if (isNaN(limit) || limit < 0) {
+      if (isNaN(limit) || limit < 0 || limit > 30) {
         throw "Invalid limit value!";
       }
 

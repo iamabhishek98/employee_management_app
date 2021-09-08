@@ -20,9 +20,9 @@
     "sequelize": "^6.6.5"
   },
   "devDependencies": {
-    "win-node-env": "^0.4.0",
     "jest": "^27.1.0",
     "sequelize-mock": "^0.10.2",
-    "supertest": "^6.1.6"
+    "supertest": "^6.1.6",
+    "win-node-env": "^0.4.0"
   }
 }
