@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
 
 const EmployeeData = () => {
   const [users, setUsers] = useState([]);
-  const [sortBy, setSortBy] = useState("id"); // id, login, name, salary
-  const [sortOrder, setSortOrder] = useState("asc"); // + or -
+  const [sortBy, setSortBy] = useState("id");
+  const [sortOrder, setSortOrder] = useState("asc");
   const [minSalary, setMinSalary] = useState(0);
   const [maxSalary, setMaxSalary] = useState(100000);
   const [minSalaryError, setMinSalaryError] = useState("");
@@ -185,7 +185,7 @@ const EmployeeData = () => {
           <IconButton onClick={previousPage}>
             <ArrowBackIosIcon color="#000" />
           </IconButton>
-          {currPage}{" "}
+          {currPage} / {totalPageCount}{" "}
           <IconButton onClick={nextPage}>
             <ArrowForwardIosIcon color="#000" />
           </IconButton>
@@ -263,7 +263,6 @@ const EmployeeData = () => {
               variant="filled"
             />
           </div>
-
           <div>
             <TextField
               onChange={(e) => setEditedUserSalary(e.target.value)}
@@ -277,7 +276,6 @@ const EmployeeData = () => {
               error={editedUserSalaryError}
             />
           </div>
-
           <Button className={classes.blueButton} type="submit">
             Save Changes
           </Button>

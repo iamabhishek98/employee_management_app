@@ -60,7 +60,6 @@ const EmployeeFileUpload = () => {
         }
       );
 
-      // Clear percentage
       setTimeout(() => setUploadPercentage(0), 10000);
 
       const { fileName, filePath } = res.data;
@@ -74,13 +73,9 @@ const EmployeeFileUpload = () => {
           "There was a problem with the server! Please reload this page and try again!"
         );
       } else {
-        console.log(err.response);
         setMessage(err.response.data.error);
       }
       setUploadPercentage(0);
-      // setFile("");
-      // setFilename("Choose File");
-      // setUploadedFile({});
     }
   };
 
@@ -108,11 +103,6 @@ const EmployeeFileUpload = () => {
         <Button className={classes.blueButton} type="submit">
           Upload
         </Button>
-        {/* <input
-          type="submit"
-          value="Upload"
-          className="btn btn-primary btn-block mt-4"
-        /> */}
       </form>
       {uploadedFile ? (
         <div className="row mt-5">

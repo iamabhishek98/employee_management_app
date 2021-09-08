@@ -31,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     color: theme.palette.getContrastText("#3880ff"),
     backgroundColor: "#3880ff",
-    // backgroundColor: "#3880ff",
-    // "&:hover": {
-    //   backgroundColor: "#98CCFB",
-    // },
   },
 }));
 
@@ -42,83 +38,81 @@ const SimpleTable = (props) => {
   const classes = useStyles();
 
   return (
-    <React.Fragment>
-      <Paper className={classes.tableContainer}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell className={classes.tableHeaderCell}>
-                <TableSortLabel
-                  active={props.sortBy === "id"}
-                  direction={props.sortOrder}
-                  onClick={props.requestSort("id")}
-                >
-                  ID
-                </TableSortLabel>
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell}>
-                <TableSortLabel
-                  active={props.sortBy === "login"}
-                  direction={props.sortOrder}
-                  onClick={props.requestSort("login")}
-                >
-                  Login
-                </TableSortLabel>
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell}>
-                <TableSortLabel
-                  active={props.sortBy === "name"}
-                  direction={props.sortOrder}
-                  onClick={props.requestSort("name")}
-                >
-                  Name
-                </TableSortLabel>
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell}>
-                <TableSortLabel
-                  active={props.sortBy === "salary"}
-                  direction={props.sortOrder}
-                  onClick={props.requestSort("salary")}
-                >
-                  Salary
-                </TableSortLabel>
-              </TableCell>
-              <TableCell className={classes.tableHeaderCell}>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {props.users.map((item, indx) => {
-              return (
-                <TableRow key={indx}>
-                  <TableCell>{item.id}</TableCell>
-                  <TableCell>{item.login}</TableCell>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>$ {item.salary}</TableCell>
-                  <TableCell>
-                    <IconButton
-                      onClick={() =>
-                        props.showPopup(
-                          item.id,
-                          item.login,
-                          item.name,
-                          item.salary
-                        )
-                      }
-                    >
-                      <EditIcon color="primary" />
-                    </IconButton>
-                    <IconButton onClick={() => props.deleteUser(item.id)}>
-                      <DeleteIcon color="secondary" />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-          <TableFooter />
-        </Table>
-      </Paper>
-    </React.Fragment>
+    <Paper className={classes.tableContainer}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell className={classes.tableHeaderCell}>
+              <TableSortLabel
+                active={props.sortBy === "id"}
+                direction={props.sortOrder}
+                onClick={props.requestSort("id")}
+              >
+                ID
+              </TableSortLabel>
+            </TableCell>
+            <TableCell className={classes.tableHeaderCell}>
+              <TableSortLabel
+                active={props.sortBy === "login"}
+                direction={props.sortOrder}
+                onClick={props.requestSort("login")}
+              >
+                Login
+              </TableSortLabel>
+            </TableCell>
+            <TableCell className={classes.tableHeaderCell}>
+              <TableSortLabel
+                active={props.sortBy === "name"}
+                direction={props.sortOrder}
+                onClick={props.requestSort("name")}
+              >
+                Name
+              </TableSortLabel>
+            </TableCell>
+            <TableCell className={classes.tableHeaderCell}>
+              <TableSortLabel
+                active={props.sortBy === "salary"}
+                direction={props.sortOrder}
+                onClick={props.requestSort("salary")}
+              >
+                Salary
+              </TableSortLabel>
+            </TableCell>
+            <TableCell className={classes.tableHeaderCell}>Action</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {props.users.map((item, indx) => {
+            return (
+              <TableRow key={indx}>
+                <TableCell>{item.id}</TableCell>
+                <TableCell>{item.login}</TableCell>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>$ {item.salary}</TableCell>
+                <TableCell>
+                  <IconButton
+                    onClick={() =>
+                      props.showPopup(
+                        item.id,
+                        item.login,
+                        item.name,
+                        item.salary
+                      )
+                    }
+                  >
+                    <EditIcon color="primary" />
+                  </IconButton>
+                  <IconButton onClick={() => props.deleteUser(item.id)}>
+                    <DeleteIcon color="secondary" />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+        <TableFooter />
+      </Table>
+    </Paper>
   );
 };
 
