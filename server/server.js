@@ -18,10 +18,10 @@ try {
 
   const upload = multer({ storage: multer.memoryStorage() });
 
-  require("./routes/GET")({ server: server });
-  require("./routes/POST")({ server: server, upload });
-  require("./routes/PATCH")({ server: server });
-  require("./routes/DELETE")({ server: server });
+  require("./routes/GET")({ server });
+  require("./routes/POST")({ server, upload });
+  require("./routes/PATCH")({ server });
+  require("./routes/DELETE")({ server });
 
   if (process.env.NODE_ENV !== "test") {
     server.listen(PORT);
