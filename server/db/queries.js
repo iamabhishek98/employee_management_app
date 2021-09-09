@@ -1,3 +1,4 @@
+const db = require("./config");
 const Sequelize = require("sequelize");
 const Employee = require("./models/employee");
 
@@ -57,14 +58,26 @@ const deleteEmployee = async (id) => {
 };
 
 const upsertMultipleEmployees = async (employees) => {
+  const t = await db.transaction();
+
   try {
-    return await Employee.bulkCreate(employees, {
-      fields: ["id", "login", "name", "salary"],
-      updateOnDuplicate: ["id", "login", "name", "salary"],
-    });
+    await Employee.bulkCreate(
+      employees,
+      {
+        fields: ["id", "login", "name", "salary"],
+        updateOnDuplicate: ["id", "login", "name", "salary"],
+      },
+      { transaction: t }
+    );
+
+    await t.commit();
+
+    return true;
   } catch (err) {
-    return false;
+    await t.rollback();
   }
+
+  return false;
 };
 
 module.exports = {

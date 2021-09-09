@@ -16,7 +16,7 @@ describe("DELETE", () => {
   describe("/users/${id}", () => {
     describe("valid id", () => {
       it("should delete the corresponding user", async () => {
-        const res = await request(server).delete("/users/e001");
+        const res = await request(server).delete("/users/e0001");
 
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual({ results: "Employee deleted!" });
@@ -28,7 +28,7 @@ describe("DELETE", () => {
 
     describe("invalid id", () => {
       it("should throw error when user cannot be found", async () => {
-        const res = await request(server).delete("/users/e006");
+        const res = await request(server).delete("/users/e0006");
 
         expect(res.statusCode).toBe(400);
         expect(res.body).toEqual({ error: "Employee not found!" });

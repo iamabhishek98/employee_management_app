@@ -17,7 +17,7 @@ describe("PATCH", () => {
     describe("valid body", () => {
       it("should update the corresponding user", async () => {
         const updatedUser = {
-          id: "e001",
+          id: "e0001",
           login: "logan@xyz.com",
           name: "Logan",
           salary: 4320,
@@ -38,7 +38,7 @@ describe("PATCH", () => {
     describe("invalid body", () => {
       it("should throw error when user does not exist", async () => {
         const invalidUser = {
-          id: "e0010",
+          id: "e00010",
           login: "logan@xyz.com",
           name: "Logan",
           salary: 4320,
@@ -54,7 +54,7 @@ describe("PATCH", () => {
 
       it("should throw error when login is not unique", async () => {
         const invalidUser = {
-          id: "e001",
+          id: "e0001",
           login: "andy@xyz.com",
           name: "Logan",
           salary: 4320,
@@ -70,7 +70,7 @@ describe("PATCH", () => {
 
       it("should throw error when salary is invalid", async () => {
         const invalidUser = {
-          id: "e001",
+          id: "e0001",
           login: "andy@xyz.com",
           name: "Logan",
           salary: -4320,

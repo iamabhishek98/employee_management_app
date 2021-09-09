@@ -17,7 +17,7 @@ describe("POST", () => {
     describe("valid body", () => {
       it("should create a new user", async () => {
         const newUser = {
-          id: "e0010",
+          id: "e00010",
           login: "logan@xyz.com",
           name: "Logan",
           salary: 4320,
@@ -38,7 +38,7 @@ describe("POST", () => {
     describe("invalid body", () => {
       it("should throw error when id is not unique", async () => {
         const invalidUser = {
-          id: "e001",
+          id: "e0001",
           login: "logan@xyz.com",
           name: "Logan",
           salary: 4320,
@@ -54,7 +54,7 @@ describe("POST", () => {
 
       it("should throw error when login is not unique", async () => {
         const invalidUser = {
-          id: "e0010",
+          id: "e00010",
           login: "andy@xyz.com",
           name: "Logan",
           salary: 4320,
@@ -70,7 +70,7 @@ describe("POST", () => {
 
       it("should throw error when salary is invalid", async () => {
         const invalidUser = {
-          id: "e0010",
+          id: "e00010",
           login: "logan@xyz.com",
           name: "Logan",
           salary: -4320,
@@ -114,19 +114,20 @@ describe("POST", () => {
         });
 
         const savedUsers = await Employee.findAll({
-          where: { id: ["e00011", "e00012"] },
+          order: [["id", "ASC"]],
           raw: true,
         });
 
         expect(savedUsers).toEqual([
+          ...employees,
           {
-            id: "e00011",
+            id: "e00051",
             login: "harry@xyz.com",
             name: "Harry Potter",
             salary: 1234,
           },
           {
-            id: "e00012",
+            id: "e00052",
             login: "ron@xyz.com",
             name: "Ron Weasley",
             salary: 19234.5,
@@ -145,7 +146,7 @@ describe("POST", () => {
         });
 
         const savedUsers = await Employee.findAll({
-          where: { id: ["e0001", "e00012"] },
+          order: [["id", "ASC"]],
           raw: true,
         });
 
@@ -162,6 +163,7 @@ describe("POST", () => {
             name: "Ron Weasley",
             salary: 19234.5,
           },
+          ...employees.slice(-4),
         ]);
       });
     });
