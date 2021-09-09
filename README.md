@@ -1,6 +1,6 @@
 # Employee Management App
 
-This is a full-stack application which was built using React.js, Node.js, PostgreSQL and Docker.
+This is a full-stack application built using React.js, Node.js, PostgreSQL and Docker
 
 ## Prerequisites
 
@@ -18,8 +18,9 @@ This is a full-stack application which was built using React.js, Node.js, Postgr
 
 ## Instructions for running tests
 
-Note: If running tests for the first time after building containers, some tests might fail due to connections errors to the database container. Please proceed to re-run tests to see the expected results.
+Note: If running tests for the first time after building containers, some tests might fail due to connection errors to the database container. Please proceed to re-run tests to view the expected results.
 
-1. Run `cd server` to enter the server directory
-2. Run `npm install` in the server directory
-3. Run `npm test` to run the tests.
+1. Make sure that the containers built previously are still up and running
+2. Run `cd server` to enter the server directory
+3. Run `npm install` in the server directory
+4. Run `npm test` to execute the tests
