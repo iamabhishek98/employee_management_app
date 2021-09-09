@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Message from "./Message";
 import Progress from "./Progress";
 
+const API_SERVER_URL = process.env.API_SERVER_URL || "http://localhost:5000";
+
 const useStyles = makeStyles((theme) => ({
   blueButton: {
     fontWeight: "bold",
@@ -43,22 +45,18 @@ const EmployeeFileUpload = () => {
 
     formData.append("file", new File([file], file.name, { type: "text/csv" }));
     try {
-      const res = await axios.post(
-        "http://localhost:5000/users/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          onUploadProgress: (progressEvent) => {
-            setUploadPercentage(
-              parseInt(
-                Math.round((progressEvent.loaded * 100) / progressEvent.total)
-              )
-            );
-          },
-        }
-      );
+      const res = await axios.post(`${API_SERVER_URL}/users/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          setUploadPercentage(
+            parseInt(
+              Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            )
+          );
+        },
+      });
 
       setTimeout(() => setUploadPercentage(0), 10000);
 

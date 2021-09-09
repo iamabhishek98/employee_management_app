@@ -5,12 +5,21 @@ services:
     stdin_open: true
     ports:
       - "3000:3000"
+    environment:
+      - API_SERVER_URL=http://localhost:5000
     networks:
       - employee-management-app
   server:
     image: server
     ports:
       - "5000:5000"
+    environment:
+      - NODE_ENV=local
+      - PORT=5000
+      - DB_HOST=host.docker.internal
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_PORT=5432
     networks:
       - employee-management-app
     depends_on:
