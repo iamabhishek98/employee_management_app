@@ -1,6 +1,6 @@
-const db = require("./Config");
+const db = require("./config");
 const Sequelize = require("sequelize");
-const Employee = require("./models/Employee");
+const Employee = require("./models/employee");
 
 const fetchEmployee = async (id) => {
   return await Employee.findOne({ where: { id: id }, raw: true });

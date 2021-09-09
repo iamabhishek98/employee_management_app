@@ -1,6 +1,6 @@
 const express = require("express");
 const server = express();
-const db = require("./db/Config");
+const db = require("./db/config");
 const cors = require("cors");
 const multer = require("multer");
 const bodyParser = require("body-parser");

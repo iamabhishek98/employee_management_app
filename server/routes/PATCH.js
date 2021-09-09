@@ -1,6 +1,6 @@
-const { successHandler, errorHandler } = require("../lib/ResponseHandlers");
-const { checkValidSalary } = require("../lib/ValidationHandlers");
-const { updateEmployee } = require("../db/Queries");
+const { successHandler, errorHandler } = require("../lib/response_utility");
+const { checkValidSalary } = require("../lib/validation_utility");
+const { updateEmployee } = require("../db/queries");
 
 module.exports = ({ server }) => {
   server.patch("/users", async (req, res) => {

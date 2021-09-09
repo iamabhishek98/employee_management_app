@@ -1,7 +1,7 @@
-const { successHandler, errorHandler } = require("../lib/ResponseHandlers");
-const { upsertMultipleEmployees, insertEmployee } = require("../db/Queries");
-const { parseCsv } = require("../lib/FileHandlers");
-const { checkValidSalary } = require("../lib/ValidationHandlers");
+const { successHandler, errorHandler } = require("../lib/response_utility");
+const { upsertMultipleEmployees, insertEmployee } = require("../db/queries");
+const { parseCsv } = require("../lib/file_utility");
+const { checkValidSalary } = require("../lib/validation_utility");
 
 module.exports = ({ server, upload }) => {
   server.post("/users/upload", upload.single("file"), async (req, res) => {

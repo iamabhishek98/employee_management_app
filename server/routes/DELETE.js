@@ -1,5 +1,5 @@
-const { successHandler, errorHandler } = require("../lib/ResponseHandlers");
-const { deleteEmployee } = require("../db/Queries");
+const { successHandler, errorHandler } = require("../lib/response_utility");
+const { deleteEmployee } = require("../db/queries");
 
 module.exports = ({ server }) => {
   server.delete("/users/:id", async (req, res) => {

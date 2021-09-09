@@ -1,7 +1,7 @@
 const request = require("supertest");
 const server = require("../../server.js");
-const Employee = require("../../db/models/Employee");
-const employees = require("../TestData");
+const Employee = require("../../db/models/employee");
+const employees = require("../test_data");
 
 describe("PATCH", () => {
   beforeEach(async () => {

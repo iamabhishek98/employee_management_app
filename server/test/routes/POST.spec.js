@@ -1,7 +1,7 @@
 const request = require("supertest");
 const server = require("../../server.js");
-const Employee = require("../../db/models/Employee");
-const employees = require("../TestData");
+const Employee = require("../../db/models/employee");
+const employees = require("../test_data");
 
 describe("POST", () => {
   beforeEach(async () => {
@@ -106,7 +106,7 @@ describe("POST", () => {
       it("should create new users", async () => {
         const res = await request(server)
           .post("/users/upload")
-          .attach("file", "./test/files/New.csv");
+          .attach("file", "./test/files/new.csv");
 
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual({
@@ -137,7 +137,7 @@ describe("POST", () => {
       it("should create and update new users", async () => {
         const res = await request(server)
           .post("/users/upload")
-          .attach("file", "./test/files/Update.csv");
+          .attach("file", "./test/files/update.csv");
 
         expect(res.statusCode).toBe(200);
         expect(res.body).toEqual({
@@ -170,7 +170,7 @@ describe("POST", () => {
       it("should throw error when login is not unique", async () => {
         const res = await request(server)
           .post("/users/upload")
-          .attach("file", "./test/files/InvalidLogin.csv");
+          .attach("file", "./test/files/invalid_login.csv");
 
         expect(res.statusCode).toBe(400);
         expect(res.body).toEqual({
@@ -184,7 +184,7 @@ describe("POST", () => {
       it("should throw error when file is not CSV", async () => {
         const res = await request(server)
           .post("/users/upload")
-          .attach("file", "./test/files/New.txt");
+          .attach("file", "./test/files/new.txt");
 
         expect(res.statusCode).toBe(400);
         expect(res.body).toEqual({
@@ -198,7 +198,7 @@ describe("POST", () => {
       it("should throw error when file is empty", async () => {
         const res = await request(server)
           .post("/users/upload")
-          .attach("file", "./test/files/Empty.csv");
+          .attach("file", "./test/files/empty.csv");
 
         expect(res.statusCode).toBe(400);
         expect(res.body).toEqual({
@@ -212,7 +212,7 @@ describe("POST", () => {
       it("should throw error when file contains incorrect column values", async () => {
         const res = await request(server)
           .post("/users/upload")
-          .attach("file", "./test/files/Invalid.csv");
+          .attach("file", "./test/files/invalid.csv");
 
         expect(res.statusCode).toBe(400);
         expect(res.body).toEqual({
@@ -226,7 +226,7 @@ describe("POST", () => {
       it("should throw error when file contains invalid salary values", async () => {
         const res = await request(server)
           .post("/users/upload")
-          .attach("file", "./test/files/InvalidSalary.csv");
+          .attach("file", "./test/files/invalid_salary.csv");
 
         expect(res.statusCode).toBe(400);
         expect(res.body).toEqual({
