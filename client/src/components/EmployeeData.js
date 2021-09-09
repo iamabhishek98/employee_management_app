@@ -78,7 +78,7 @@ const EmployeeData = () => {
       name: editedEmployeeName,
       salary: editedEmployeeSalary,
     };
-    axios.patch("${API_SERVER_URL}/users", employee).then((res) => {
+    axios.patch(`${API_SERVER_URL}/users`, employee).then((res) => {
       if (res.status === 200) {
         fetchEmployees();
       }
