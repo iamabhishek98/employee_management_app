@@ -4,6 +4,8 @@ const { parseCsv } = require("../lib/file_utility");
 const { checkValidSalary } = require("../lib/validation_utility");
 
 module.exports = ({ server, upload }) => {
+  let isProcessing = false;
+
   server.post("/users/upload", upload.single("file"), async (req, res) => {
     try {
       if (
@@ -14,6 +16,12 @@ module.exports = ({ server, upload }) => {
         throw "Please upload a CSV file!";
       }
 
+      if (isProcessing) {
+        throw "Server is currently busy!";
+      }
+
+      isProcessing = true;
+
       const employees = parseCsv(req.file);
 
       const upsertEmployeesResponse = await upsertMultipleEmployees(employees);
@@ -22,8 +30,11 @@ module.exports = ({ server, upload }) => {
         throw "Employees could not be created/updated!";
       }
 
+      isProcessing = false;
+
       return successHandler(res, "Successfully created/updated employees!");
     } catch (err) {
+      isProcessing = false;
       return errorHandler(res, err);
     }
   });
