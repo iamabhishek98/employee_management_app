@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Message from "./Message";
 import Progress from "./Progress";
+require("dotenv").config();
 
 const API_SERVER_URL = process.env.API_SERVER_URL || "http://localhost:5000";
 

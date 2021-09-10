@@ -1,8 +1,15 @@
 # Employee Management App
 
-This is a full-stack application built using React.js, Node.js, PostgreSQL and Docker
+This is a web application which supports CRUD functionalities to manage employees.
 
-## Prerequisites
+## Tech Stack
+
+1. React
+2. Node.js
+3. PostgreSQL
+4. Docker
+
+## Prerequisites for setting up locally
 
 1. NPM 7
 2. Docker

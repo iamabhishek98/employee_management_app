@@ -11,7 +11,10 @@ const PORT = process.env.PORT || 5000;
 try {
   db.authenticate()
     .then(() => console.log("Database connected..."))
-    .catch((err) => console.log(`DB error: ${err}`));
+    .catch((err) => {
+      console.log(`DB error: ${err}`);
+      process.exit(1);
+    });
 
   server.use(cors());
   server.use(bodyParser.json());
@@ -25,7 +28,7 @@ try {
 
   if (process.env.NODE_ENV !== "test") {
     server.listen(PORT);
-    console.log("App Server running at - http://localhost:%s", PORT);
+    console.log(`Server running on port ${PORT}...`);
   }
 } catch (err) {
   console.log("error:", err);

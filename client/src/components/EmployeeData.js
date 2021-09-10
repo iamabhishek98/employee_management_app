@@ -5,6 +5,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Popup from "./SimpleDialog";
 import SimpleTable from "./SimpleTable";
+require("dotenv").config();
 
 const API_SERVER_URL = process.env.API_SERVER_URL || "http://localhost:5000";
 
